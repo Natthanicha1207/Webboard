@@ -1,0 +1,343 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Nunito', sans-serif;
+    background: #f5f0e8;
+}
+
+h1, h2 {
+    font-family: 'Playfair Display', serif;
+}
+
+header{
+    background: #6B3A2A;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* keep the header visible at all times */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+header h1{
+    color: #fff;
+    font-size: 24px;
+}
+header .brand{
+    color: #fff;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+nav a{
+    color: #fff;
+    text-decoration: none;
+    margin-left: 15px;
+    font-family: 'Nunito', sans-serif;
+}
+
+button{
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+}
+main {
+    max-width: 800px;
+    /* remove huge top margin that was pushing content off screen */
+    margin: 0 auto;
+    /* add top padding so content isn’t hidden behind the fixed header */
+    padding: 120px 20px 20px;
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: #3a2a1a;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    gap: 20px;
+}
+.login-box {
+    background: #fff;
+    padding: 30px 50px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    min-width: 35%;
+}
+
+.social-btn {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.facebook { border-left: 5px solid #1877F2;}
+.google { border-left: 5px solid #EA4335;}
+.X { border-left: 5px solid black;}
+
+.login-input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    width: 100%;
+}
+
+.email-btn {
+    border-left: 5px solid #6B3A2A;
+    background-color: #6B3A2A;
+    color: white;
+}
+
+.divider {
+    text-align: center;
+    color: #999;
+    margin: 10px 0;
+}
+
+.register-btn {
+    background-color: #6B3A2A;
+    color: #fff;
+    border: none;
+    padding: 12px 50px;
+    border-radius: 25px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Modal popup styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+.modal-content h2 {
+    color: #3a2a1a;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #333;
+}
+.post-create {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.post-create h3 {
+    color: #3a2a1a;
+    margin-bottom: 15px;
+}
+
+.post-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.post-input-wrapper {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* material symbol default styling */
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+}
+
+.post-input {
+    width: 100%;
+    padding: 15px 56px 15px 20px; /* room for inside attach button */
+    border-radius: 25px;
+    border: 2px solid #6B3A2A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    outline: none;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+/* attach icon inside input */
+.attach-btn{
+        position:absolute;
+        right:8px;
+        top:50%;
+        transform:translateY(-50%);
+        width:38px;
+        height:38px;
+        border-radius:50%;
+        border:none;
+        background:transparent;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        color:#6B3A2A;
+        cursor:pointer;
+}
+.attach-btn .material-symbols-outlined{ font-size:20px }
+
+.file-list span{ display:inline-block }
+
+.submit-btn {
+    padding: 15px 25px;
+    background: none;
+    border: 2px solid #6B3A2A;
+    border-radius: 10px;
+    color: #6B3A2A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Prominent Post button style */
+.post-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:14px 22px;
+    background:#5A2E28; /* dark red-brown */
+    color:#fff;
+    border: none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:700;
+    box-shadow: 0 6px 18px rgba(90,46,40,0.25);
+}
+.post-btn .material-symbols-outlined{
+    font-variation-settings: 'wght' 600;
+    transform: translateY(1px);
+    font-size:20px;
+}
+.post-btn:hover{ filter:brightness(0.95); }
+
+/* auth button in header: same color/shape as .post-btn but keep compact size */
+#authBtn{
+    background:#5A2E28; /* same dark red-brown */
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    font-weight:700;
+    box-shadow: 0 4px 10px rgba(90,46,40,0.18);
+    padding:8px 12px; /* small size to keep fitting in header */
+    font-size:14px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+}
+#authBtn:hover{ filter:brightness(0.95); }
+
+.trending-box {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 25px 30px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.trending-box h3 {
+    color: #6B3A2A;
+    margin-bottom: 20px;
+}
+
+.trending-List {
+    List-style: none;
+    padding: 0;
+    counter-reset: trending;
+}
+
+.trending-List li {
+   counter-increment: trending;
+   display: flex;
+   flex-direction: column;
+   padding: 12px 0;
+    border-bottom: 1px solid #f0e8e0;
+}
+
+.trending-List li:before {
+    content: counter(trending);
+    font-size: 24px;
+    font-weight: bold;
+    color: #ddd;
+    font-family: 'Playfair Display', serif;
+}
+
+.trend-title {
+    font-weight: 600;
+    color: #3a2a1a;
+    margin: 5px 0;
+}
+
+.trend-meta {
+    font-size: 12px;
+    color: #999;
+}   

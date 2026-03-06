@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Webboard</title>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=favorite" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=visibility" />
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .material-symbols-outlined {
+                font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href="index.html" class="brand">Webboard</a>
+            <nav>
+                <a href="#">Search</a>
+                <a href="#">Trending</a>
+                <a href="#">Politics</a>
+                <a href="#">Money</a>
+                <a href="#">Market</a>
+                <a href="#">Blog</a>
+                <a href="#">Lifestyle</a>
+                <a href="#">Travel</a>
+                <a href="#">Sports</a>
+                <a href="#">Fashion</a>
+            </nav>
+            <div class="auth-area">
+                <button id="authBtn">Login / Register</button>
+                <span id="loggedIndicator" style="display:none;margin-left:8px;color:#2b912b;font-weight:600;">● Logged in</span>
+            </div>
+        </header>
+        <main>
+            <div class="post-create"></div>
+            <h3>What would you like to share?</h3>
+            <div class="post-input-row">
+                <div class="post-input-wrapper">
+                    <input type="text" placeholder="Tell us your story..." class="post-input" id="postInput">
+                    <button type="button" class="attach-btn" id="attachBtn" aria-label="Attach file">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </button>
+                    <input type="file" id="attachInput" style="display:none" multiple>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center">
+                    <button class="post-btn" id="postBtnLive"><i class="fa-solid fa-paper-plane"></i> Post</button>
+                </div>
+            </div>
+            <div id="fileList" class="file-list" aria-live="polite" style="margin-top:8px;font-size:0.9rem;color:#444"></div>
+            <div class="trending-box">
+                <h3>What do people interest about now? </h3>
+                <ol id="trendingList" class="trending-list"></ol>
+            </div>
+            <div class="feed-section">
+                <div class="feed-tabs">
+                    <button class="tab-btn active">Following</button>
+                    <button class="tab-btn">For You</button>
+            </div>
+            <div class="posts-grid" id="posts-grid">
+                
+            </div>
+        </main>
+
+        <!-- Share modal -->
+        <div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;z-index:9998;">
+            <div style="position:relative;width:90%;max-width:450px;background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                <button id="closeShareModal" aria-label="Close" style="position:absolute;right:12px;top:12px;background:transparent;border:none;font-size:24px;cursor:pointer;color:#999;">&times;</button>
+                <h3 style="margin:0 0 16px 0;color:#3a2a1a;">Share this post</h3>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <button id="shareToUser" style="padding:10px;text-align:left;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;">📤 Share to platform (mention user)</button>
+                    <button id="copyUrl" style="padding:10px;text-align:left;border:1px solid #ddd;border-radius:8px;background:#fff;cursor:pointer;">🔗 Copy link</button>
+                    <div style="padding-top:8px;border-top:1px solid #f0e8e0;">
+                        <p style="margin:0 0 8px 0;font-size:12px;color:#777;font-weight:600;">Share on other platforms:</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <a id="shareTwitter" href="#" target="_blank" style="padding:8px 12px;border-radius:6px;background:#1DA1F2;color:#fff;text-decoration:none;font-size:12px;font-weight:600;">Twitter/X</a>
+                            <a id="shareFacebook" href="#" target="_blank" style="padding:8px 12px;border-radius:6px;background:#1877F2;color:#fff;text-decoration:none;font-size:12px;font-weight:600;">Facebook</a>
+                            <a id="shareLinkedin" href="#" target="_blank" style="padding:8px 12px;border-radius:6px;background:#0A66C2;color:#fff;text-decoration:none;font-size:12px;font-weight:600;">LinkedIn</a>
+                            <a id="shareWhatsapp" href="#" target="_blank" style="padding:8px 12px;border-radius:6px;background:#25D366;color:#fff;text-decoration:none;font-size:12px;font-weight:600;">WhatsApp</a>
+                            <a id="shareLine" href="#" target="_blank" style="padding:8px 12px;border-radius:6px;background:#00B900;color:#fff;text-decoration:none;font-size:12px;font-weight:600;">Line</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login modal -->
+        <div id="loginModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;z-index:9999;">
+            <div style="position:relative;width:90%;max-width:500px;background:#fff;border-radius:12px;padding:20px;box-shadow:0 8px 24px rgba(0,0,0,0.2);">
+                <button id="closeLoginModal" aria-label="Close" style="position:absolute;right:12px;top:12px;background:transparent;border:none;font-size:24px;cursor:pointer;color:#999;">&times;</button>
+                <h3 style="margin:0 0 16px 0;color:#3a2a1a;">Please login to post</h3>
+                <p style="color:#666;margin:0 0 16px 0;font-size:14px;">You need to be logged in to share your thoughts. Sign in or create an account to get started.</p>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <button id="goToLoginBtn" style="padding:12px;text-align:center;border:none;border-radius:8px;background:#6B3A2A;color:#fff;cursor:pointer;font-weight:600;font-size:14px;">Login</button>
+                    <button id="goToRegisterBtn" style="padding:12px;text-align:center;border:1px solid #ddd;border-radius:8px;background:#fff;color:#6B3A2A;cursor:pointer;font-weight:600;font-size:14px;">Register</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function(){
+                const attachBtn = document.getElementById('attachBtn');
+                const attachInput = document.getElementById('attachInput');
+                const postInput = document.getElementById('postInput');
+                const postBtn = document.querySelector('.post-btn');
+
+                const authBtn = document.getElementById('authBtn');
+                const loggedIndicator = document.getElementById('loggedIndicator');
+                const fileList = document.getElementById('fileList');
+                let pendingPost = null;
+
+
+                function updateAuthUI(){
+                    const logged = (function(){ try{ return localStorage.getItem('loggedIn') === '1' }catch(e){ return false } })();
+                    if(logged){
+                        loggedIndicator.style.display = 'inline-block';
+                        authBtn.textContent = 'Logout';
+                    } else {
+                        loggedIndicator.style.display = 'none';
+                        authBtn.textContent = 'Login / Register';
+                    }
+                }
+
+                // Posts storage and real-time/trending logic
+                const BC_NAME = 'webboard-channel';
+                const storageKey = 'wb_posts';
+                const bc = (window.BroadcastChannel ? new BroadcastChannel(BC_NAME) : null);
+
+                function loadPosts(){
+                    try{
+                        const raw = localStorage.getItem(storageKey);
+                        return raw ? JSON.parse(raw) : [];
+                    }catch(e){ return []; }
+                }
+                function savePosts(posts){
+                    try{ localStorage.setItem(storageKey, JSON.stringify(posts)); }catch(e){}
+                    // notify other tabs
+                    if(bc){ bc.postMessage({type:'posts-updated'}); }
+                    else { try{ localStorage.setItem('wb_posts_update', Date.now().toString()); }catch(e){} }
+                }
+
+                function extractTags(text){
+                    const tags = [];
+                    try{
+                        const re = /#(\w+)/g;
+                        let m;
+                        while((m = re.exec(text))){ tags.push(m[1].toLowerCase()); }
+                    }catch(e){}
+                    return tags;
+                }
+
+                function computeTalkAbout(p){
+                    // derive talkAbout from comments and shares
+                    return (p.comments||0) * 2.0 + (p.shares||0) * 1.5;
+                }
+
+                function computeScore(p){
+                    // Weighted score: likes, dislikes, shares, comments, views, recency
+                    const ageHours = Math.max(1, (Date.now() - p.ts) / (1000*60*60));
+                    const talk = computeTalkAbout(p);
+                    const activity = (p.likes||0)*3 - (p.dislikes||0)*2 + (p.shares||0)*4 + (p.comments||0)*3 + (p.views||0)*0.5 + talk * 1.0;
+                    const recency = 1 / ageHours; // newer posts get higher
+                    return activity * 1.0 + recency * 50;
+                }
+
+                function addPost(content, files){
+                    const posts = loadPosts();
+                    const post = {
+                        id: 'p'+Date.now()+Math.floor(Math.random()*1000),
+                        content: content || '',
+                        files: files || [],
+                        tags: extractTags(content||''),
+                        ts: Date.now(),
+                        views: 0,
+                        likes: 0,
+                        dislikes: 0,
+                        shares: 0,
+                        comments: 0,
+                        commentsList: []
+                    };
+                    posts.push(post);
+                    savePosts(posts);
+                    renderAll();
+                }
+
+                function formatCount(n){ return n>=1000 ? (n/1000).toFixed(1)+'K' : String(n); }
+
+                function timeAgo(ts){
+                    const s = Math.floor((Date.now()-ts)/1000);
+                    if(s<60) return s+'s';
+                    const m = Math.floor(s/60); if(m<60) return m+'m';
+                    const h = Math.floor(m/60); if(h<24) return h+'h';
+                    const d = Math.floor(h/24); return d+'d';
+                }
+
+                const trendingListEl = document.getElementById('trendingList');
+                const postsGrid = document.getElementById('posts-grid');
+
+                function renderTrending(){
+                    const posts = loadPosts();
+                    // sort by score
+                    posts.sort((a,b)=> computeScore(b) - computeScore(a));
+                    trendingListEl.innerHTML = '';
+                    const top = posts.slice(0,6);
+                    top.forEach(p=>{
+                        const li = document.createElement('li');
+                        li.dataset.id = p.id;
+                        li.innerHTML = `
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <div style="flex:1">
+                                    <div class="trend-title" style="font-weight:700;cursor:pointer;">${escapeHtml(p.content.substring(0,120) || '(no text)')}</div>
+                                    <div style="font-size:12px;color:#777;margin-top:6px;">
+                                        ${p.tags.map(t=>'<span style="background:#f3ece8;border-radius:10px;padding:3px 8px;margin-right:6px;font-size:11px;color:#6b3a2a;">#'+t+'</span>').join('')}
+                                    </div>
+                                </div>
+                                <div style="text-align:right;font-size:12px;color:#999;min-width:120px;">
+                                    <div><span class="material-symbols-outlined" style="vertical-align:middle;font-size:16px;color:#6B3A2A;">visibility</span> ${formatCount(p.views)} views · ${timeAgo(p.ts)}</div>
+                                    <div style="margin-top:6px;"><i class="fa-regular fa-thumbs-up" style="color:#27AE60;margin-right:2px;"></i>${formatCount(p.likes||0)} <i class="fa-regular fa-thumbs-down" style="color:#E74C3C;margin-right:2px;"></i>${formatCount(p.dislikes||0)} · ${formatCount(p.comments)} 💬</i></div>
+                                </div>
+                            </div>
+                        `;
+                        trendingListEl.appendChild(li);
+                    });
+                }
+
+                function escapeHtml(s){ return String(s).replace(/[&<>\"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]||c)); }
+
+                function renderPosts(){
+                    const posts = loadPosts().slice().sort((a,b)=> b.ts - a.ts);
+                    postsGrid.innerHTML = '';
+                    posts.forEach(p=>{
+                        const card = document.createElement('div');
+                        card.style.background='#fff';
+                        card.style.borderRadius='12px';
+                        card.style.padding='12px';
+                        card.style.margin='12px 0';
+                        card.dataset.postId = p.id;
+                        const commentsList = p.commentsList || [];
+                        const isExpanded = card.dataset.expanded === 'true';
+                        card.innerHTML = `
+                            <div style="font-weight:700;color:#3a2a1a;">${escapeHtml(p.content)}</div>
+                            <div style="font-size:12px;color:#777;margin-top:8px;">${p.tags.map(t=>'<span style="margin-right:6px;color:#6B3A2A;">#'+t+'</span>').join('')} · ${timeAgo(p.ts)} · <span class="material-symbols-outlined" style="vertical-align:middle;font-size:16px;color:#6B3A2A;">visibility</span> ${formatCount(p.views)} views</div>
+                            <div style="margin-top:8px;font-size:13px;color:#444;display:flex;gap:10px;align-items:center;">
+                                <div style="display:flex;align-items:center;gap:4px;">
+                                    <button data-action="like-up" data-id="${p.id}" style="padding:4px 8px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;gap:4px;color:#27AE60;font-weight:600;font-size:12px;transition:transform 0.2s;">
+                                        <i class="fa-regular fa-thumbs-up"></i>
+                                        <span>${p.likes||0}</span>
+                                    </button>
+                                    <button data-action="like-down" data-id="${p.id}" style="padding:4px 8px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;gap:4px;color:#E74C3C;font-weight:600;font-size:12px;transition:transform 0.2s;">
+                                        <i class="fa-regular fa-thumbs-down"></i>
+                                        <span>${p.dislikes||0}</span>
+                                    </button>
+                                </div>
+                                <button data-action="share" data-id="${p.id}">Share (${p.shares})</button>
+                                <button data-action="toggle-comments" data-id="${p.id}" style="font-weight:600;color:#6B3A2A;">Comments (${p.comments})</button>
+                            </div>
+                            <div class="comments-section" style="display:none;margin-top:12px;padding-top:12px;border-top:1px solid #f0e8e0;">
+                                <div class="comments-list" style="margin-bottom:10px;max-height:200px;overflow-y:auto;">
+                                    ${commentsList.length === 0 ? '<div style="color:#999;font-size:12px;">No comments yet</div>' : commentsList.map((c,i)=>'<div style="padding:6px 0;font-size:13px;color:#444;">• '+escapeHtml(c)+'</div>').join('')}
+                                </div>
+                                <div style="display:flex;gap:8px;">
+                                    <input type="text" class="comment-input" placeholder="Add a comment..." style="flex:1;padding:8px;border:1px solid #ddd;border-radius:6px;font-size:12px;font-family:'Nunito', sans-serif;">
+                                    <button class="add-comment-btn" data-id="${p.id}" style="padding:8px 12px;background:#6B3A2A;color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:600;font-size:12px;">Post</button>
+                                </div>
+                            </div>
+                        `;
+                        postsGrid.appendChild(card);
+                        // Auto-increment view count when post is displayed (once per session)
+                        try{
+                            const viewedKey = 'viewed_' + p.id;
+                            if(!sessionStorage.getItem(viewedKey)){
+                                sessionStorage.setItem(viewedKey, '1');
+                                // Update views without re-rendering
+                                const allPosts = loadPosts();
+                                const post = allPosts.find(x=>x.id===p.id);
+                                if(post){
+                                    post.views = (post.views||0) + 1;
+                                    savePosts(allPosts);
+                                }
+                            }
+                        }catch(e){}
+                    });
+                }
+
+                function incrementMetric(id, metric){
+                    const posts = loadPosts();
+                    const p = posts.find(x=>x.id===id); if(!p) return;
+                    p[metric] = (p[metric]||0)+1;
+                    savePosts(posts);
+                    renderAll();
+                }
+
+                function renderAll(){ renderTrending(); renderPosts(); }
+
+                // override performPost to actually add post and broadcast
+                function performPost(postData){
+                    const content = postData && postData.content ? postData.content : (postInput ? postInput.value : '');
+                    const files = postData && postData.files ? postData.files : Array.from((attachInput && attachInput.files) || []).map(f=>f.name);
+                    if(!content && files.length===0){ alert('Enter a message or attach files before posting'); return; }
+                    addPost(content, files);
+                    // clear input and file list
+                    if(postInput) postInput.value = '';
+                    if(attachInput) attachInput.value = null;
+                    if(fileList) fileList.innerHTML = '';
+                    alert('Your post has been published');
+                }
+
+                // listen to broadcast or storage events for real-time updates
+                if(bc){ bc.onmessage = function(){ renderAll(); }; }
+                window.addEventListener('storage', function(e){ if(e.key === 'wb_posts' || e.key === 'wb_posts_update') renderAll(); });
+
+                // share modal elements and handlers
+                const shareModal = document.getElementById('shareModal');
+                const shareModalCloseBtn = document.getElementById('closeShareModal');
+                const loginModal = document.getElementById('loginModal');
+                const closeLoginModalBtn = document.getElementById('closeLoginModal');
+                let activeSharePostId = null;
+
+                function openLoginModal(){
+                    loginModal.style.display = 'flex';
+                }
+                function closeLoginModal(){
+                    loginModal.style.display = 'none';
+                }
+
+                closeLoginModalBtn.addEventListener('click', closeLoginModal);
+                document.getElementById('goToLoginBtn').addEventListener('click', function(){
+                    location.href = 'login.html';
+                });
+                document.getElementById('goToRegisterBtn').addEventListener('click', function(){
+                    location.href = 'register.html';
+                });
+
+                function openShareModal(postId){
+                    activeSharePostId = postId;
+                    shareModal.style.display = 'flex';
+                    updateShareLinks(postId);
+                }
+                function closeShareModal(){
+                    activeSharePostId = null;
+                    shareModal.style.display = 'none';
+                }
+
+                function updateShareLinks(postId){
+                    const baseUrl = window.location.origin + window.location.pathname + '?postId=' + postId;
+                    const posts = loadPosts();
+                    const post = posts.find(x=>x.id===postId);
+                    const text = (post && post.content) ? post.content.substring(0,100) : 'Check out this post';
+                    document.getElementById('shareTwitter').href = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(baseUrl) + '&text=' + encodeURIComponent(text);
+                    document.getElementById('shareFacebook').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(baseUrl);
+                    document.getElementById('shareLinkedin').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(baseUrl);
+                    document.getElementById('shareWhatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + baseUrl);
+                    document.getElementById('shareLine').href = 'https://social-plugins.line.me/web/share?url=' + encodeURIComponent(baseUrl) + '&text=' + encodeURIComponent(text);
+                }
+
+                shareModalCloseBtn.addEventListener('click', closeShareModal);
+                document.getElementById('copyUrl').addEventListener('click', function(){
+                    if(!activeSharePostId) return;
+                    const url = window.location.origin + window.location.pathname + '?postId=' + activeSharePostId;
+                    navigator.clipboard.writeText(url).then(()=>{
+                        alert('Link copied to clipboard!');
+                    }).catch(()=>{ alert('Failed to copy link'); });
+                });
+                document.getElementById('shareToUser').addEventListener('click', function(){
+                    if(!activeSharePostId) return;
+                    const user = prompt('Enter username to share with:');
+                    if(!user) return;
+                    const posts = loadPosts();
+                    const post = posts.find(x=>x.id===activeSharePostId); if(!post) return;
+                    post.shares = (post.shares||0) + 1;
+                    savePosts(posts);
+                    renderAll();
+                    alert('Shared with @' + user + '!');
+                    closeShareModal();
+                });
+
+                // delegate clicks in posts-grid (view/share/toggle-comments/add comment)
+                postsGrid.addEventListener('click', function(ev){
+                    const btn = ev.target.closest('button'); if(!btn) return;
+                    const action = btn.dataset.action; const id = btn.dataset.id;
+                    if(!id || !action) return;
+                    
+                    const logged = (function(){ try{ return localStorage.getItem('loggedIn') === '1' }catch(err){ return false } })();
+                    
+                    if(action === 'like-up'){
+                        if(!logged){ openLoginModal(); return; }
+                        const posts = loadPosts();
+                        const post = posts.find(x=>x.id===id); if(!post) return;
+                        post.likes = (post.likes||0) + 1;
+                        savePosts(posts);
+                        renderAll();
+                    }
+                    else if(action === 'like-down'){
+                        if(!logged){ openLoginModal(); return; }
+                        const posts = loadPosts();
+                        const post = posts.find(x=>x.id===id); if(!post) return;
+                        post.dislikes = (post.dislikes||0) + 1;
+                        savePosts(posts);
+                        renderAll();
+                    }
+                    else if(action === 'share'){ openShareModal(id); }
+                    else if(action === 'toggle-comments'){
+                        if(!logged){ openLoginModal(); return; }
+                        const card = document.querySelector(`[data-post-id="${id}"]`);
+                        if(!card) return;
+                        const section = card.querySelector('.comments-section');
+                        if(section.style.display === 'none'){
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    }
+                });
+
+                // add comment handler
+                postsGrid.addEventListener('click', function(ev){
+                    if(ev.target.classList.contains('add-comment-btn')){
+                        const logged = (function(){ try{ return localStorage.getItem('loggedIn') === '1' }catch(err){ return false } })();
+                        if(!logged){ openLoginModal(); return; }
+                        
+                        const btn = ev.target;
+                        const id = btn.dataset.id;
+                        const input = btn.parentElement.querySelector('.comment-input');
+                        const text = (input.value||'').trim();
+                        if(!text) return;
+                        const posts = loadPosts();
+                        const p = posts.find(x=>x.id===id); if(!p) return;
+                        p.comments = (p.comments||0) + 1;
+                        p.commentsList = p.commentsList || [];
+                        p.commentsList.push(text);
+                        savePosts(posts);
+                        renderAll();
+                    }
+                });
+
+                // clicking trending title increments views
+                trendingListEl.addEventListener('click', function(ev){
+                    const li = ev.target.closest('li'); if(!li) return;
+                    const id = li.dataset.id; if(!id) return; incrementMetric(id, 'views');
+                });
+
+                // periodically update time labels
+                setInterval(function(){ renderTrending(); renderPosts(); }, 30000);
+
+                // initial render
+                renderAll();
+
+                if(attachBtn && attachInput){
+                    attachBtn.addEventListener('click', function(){
+                        attachInput.click();
+                    });
+                    attachInput.addEventListener('change', function(e){
+                        const files = Array.from(e.target.files || []);
+                        fileList.innerHTML = '';
+                        const names = [];
+                        files.forEach(f => {
+                            names.push(f.name);
+                            const span = document.createElement('span');
+                            span.textContent = f.name;
+                            span.style.display = 'inline-block';
+                            span.style.background = '#f1f1f1';
+                            span.style.borderRadius = '12px';
+                            span.style.padding = '4px 8px';
+                            span.style.marginRight = '6px';
+                            span.style.marginTop = '4px';
+                            fileList.appendChild(span);
+                        });
+                        // reflect filenames in the text input for visibility
+                        if(postInput){
+                            postInput.value = postInput.value ? postInput.value + ' [' + names.join(',') + ']' : '[' + names.join(',') + ']';
+                        }
+                    });
+                }
+
+                if(postBtn){
+                    postBtn.addEventListener('click', function(e){
+                        const logged = (function(){ try{ return localStorage.getItem('loggedIn') === '1' }catch(err){ return false } })();
+                        if(!logged){
+                            openLoginModal();
+                        } else {
+                            performPost();
+                        }
+                    });
+                }
+
+                // quick test post button (for algorithm testing)
+                // REMOVED - no longer needed for basic functionality
+
+                if(authBtn){
+                    authBtn.addEventListener('click', function(){
+                        const logged = (function(){ try{ return localStorage.getItem('loggedIn') === '1' }catch(e){ return false } })();
+                        if(!logged){
+                            location.href = 'login.html';
+                        } else {
+                            try{ localStorage.removeItem('loggedIn'); }catch(e){}
+                            updateAuthUI();
+                            alert('You have been logged out.');
+                        }
+                    });
+                }
+
+
+
+                // receive messages from iframe (login.html) when login completes
+                window.addEventListener('message', function(ev){
+                    try{
+                        const data = ev.data || {};
+                        if(data && data.type === 'login-success'){
+                            try{ localStorage.setItem('loggedIn','1'); }catch(e){}
+                            updateAuthUI();
+                            closeLoginModal();
+                            // automatically perform pending post if any
+                            if(pendingPost){
+                                performPost(pendingPost);
+                                pendingPost = null;
+                            } else {
+                                alert('Login successful — you can now post.');
+                            }
+                        }
+                    }catch(e){/* ignore */}
+                });
+
+                // initialize UI on load
+                updateAuthUI();
+            })();
+        </script>
+        <script src="script.js"></script>
+    </body>
+</html>

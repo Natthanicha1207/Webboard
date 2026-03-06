@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login - Webboard</title>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <a href="index.html" class="brand">Webboard</a>
+        </header>
+
+        <main class="login-page">
+            <h2>Hello, my friends!</h2>
+
+            <!-- use the existing .login-box style instead of duplicating the login-page class -->
+            <div class="login-box">
+                <h3>Log in</h3>
+                <button class="social-btn facebook" onclick="showLoginPopup('Facebook')">Login with Facebook</button>
+                <button class="social-btn google" onclick="showLoginPopup('Google')">Login with Google</button>
+                <button class="social-btn X" onclick="showLoginPopup('X')">Login with X</button>
+
+                <div class="divider">- or -</div>
+
+                <input type="email" id="loginEmail" placeholder="Enter your email" class="login-input">
+                <input type="password" id="loginPassword" placeholder="Enter your password" class="login-input">
+                <button class="social-btn email-btn" onclick="loginWithEmail()">Login</button>
+            </div>
+
+            <p>Don't have an account yet? Let's be friend!!!</p>
+            <a href="register.html"><button class="register-btn">Register</button></a>
+        </main>
+
+        <!-- Modal popup for social login -->
+        <div id="loginModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeLoginPopup()">&times;</span>
+                <h2 id="modalTitle">Login</h2>
+                <p id="modalMsg">Redirecting to platform login...</p>
+                <button class="register-btn" onclick="completeLogin()">Continue</button>
+            </div>
+        </div>
+
+        <script>
+            function showLoginPopup(platform){
+                document.getElementById('modalTitle').textContent = 'Login with ' + platform;
+                document.getElementById('modalMsg').textContent = 'You will be redirected to ' + platform + ' to log in. After authentication, you will return to Webboard.';
+                document.getElementById('loginModal').style.display = 'flex';
+                window.loginPlatform = platform;
+            }
+
+            function closeLoginPopup(){
+                document.getElementById('loginModal').style.display = 'none';
+            }
+
+            function completeLogin(){
+                // Mark logged-in state and notify parent (if embedded)
+                try{ localStorage.setItem('loggedIn','1'); }catch(e){}
+                if(window.parent && window.parent !== window){
+                    window.parent.postMessage({type:'login-success'}, '*');
+                }
+                alert('Welcome back! You have successfully logged in with ' + window.loginPlatform);
+                closeLoginPopup();
+                location.href = 'index.html';
+            }
+
+            function loginWithEmail(){
+                const email = document.getElementById('loginEmail').value.trim();
+                const pwd = document.getElementById('loginPassword').value;
+                if(!email || !pwd){ alert('Please enter both email and password'); return; }
+                try{ localStorage.setItem('loggedIn','1'); }catch(e){}
+                if(window.parent && window.parent !== window){
+                    window.parent.postMessage({type:'login-success'}, '*');
+                }
+                alert('Welcome back! You have successfully logged in.');
+                location.href = 'index.html';
+            }
+        </script>
+    </body>
+</html>
