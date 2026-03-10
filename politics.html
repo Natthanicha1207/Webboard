@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Politics - Webboard</title>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <header>
+            <h1 onclick="location.href='index.html'" style="cursor:pointer;">Webboard</h1>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="#">Search</a>
+                <a href="#">Trending</a>
+                <a href="politics.html" class="active">Politics</a>
+                <a href="#">Money</a>
+                <a href="#">Market</a>
+                <a href="#">Blog</a>
+                <a href="#">Lifestyle</a>
+                <a href="#">Travel</a>
+                <a href="#">Sports</a>
+                <a href="#">Fashion</a>
+            </nav>
+            <button onclick="location.href='login.html'">Login / Register</button>
+        </header>
+
+        <main>
+            <div class="category-header">
+                <h2>Politics</h2>
+                <p>Discuss political news and current affairs</p>
+            </div>
+
+            <div class="post-create">
+                <div class="post-input-row">
+                    <div class="post-input-wrapper">
+                        <input type="text" placeholder="Share your thoughts..." class="post-input"/>
+                        <button class="submit-btn" onclick="addPost()">Post</button>
+                    </div>
+            </div>
+
+            <div class="posts-lists" id="posts-lists">
+            </div>
+        </main>
+
+        <script src="category.js"></script>
+    </body>
+</html>
