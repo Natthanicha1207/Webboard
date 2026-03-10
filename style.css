@@ -245,6 +245,17 @@ h2 {
 }
 .attach-btn .material-symbols-outlined{ font-size:20px }
 
+.category-select {
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 2px solid #6B3A2A;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    background: white;
+    color: #6B3A2A;
+    cursor: pointer;
+}
+
 .file-list span{ display:inline-block }
 
 .submit-btn {

@@ -19,6 +19,18 @@
                 <h3>Register</h3>
 
                 <button class="social-btn facebook" onclick="location.href='register-step2.html?method=facebook'">Register with Facebook</button>
+                <script async defer crossorigin="anonymous"
+                    src="https://connect.facebook.net/en_US/sdk.js"></script>
+                <script>
+                window.fbAsyncInit=function() {
+                    FB.init({
+                        appId: '1669271767766961',
+                        cookie: true,
+                        xfbml: true,
+                        version: 'v19.0'
+                    });
+                }
+                </script>
                 <button class="social-btn google" onclick="location.href='register-step2.html?method=google'">Register with Google</button>
                 <button class="social-btn X" onclick="location.href='register-step2.html?method=x'">Register with X</button>
 
