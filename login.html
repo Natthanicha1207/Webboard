@@ -11,7 +11,9 @@
             if(response.authResponse){
                FB.api('/me', {fields: 'name,email'}, function(userInfo){
                     alert('Welcome ' + userInfo.name + '!');
+                    localStorage.setItem('user', JSON.stringify(userInfo));
                     localStorage.setItem('userName', userInfo.name);
+                    localStorage.setItem('loggedIn', '1');
                     window.location.href = 'index.html';
                });
             } else {
