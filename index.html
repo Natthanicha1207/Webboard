@@ -131,7 +131,7 @@
                     const logged = (function(){ try{ return localStorage.getItem('loggedIn') === '1' }catch(e){ return false } })();
                     if(logged){
                         loggedIndicator.style.display = 'inline-block';
-                        const userName = localStorage.getItem('userName'); authBtn.textContent = userName ? 'Hi, ${userName}!' : 'logout';
+                        const userName = localStorage.getItem('userName'); authBtn.textContent = userName ? `Hi, ${userName}!` : 'logout';
                     } else {
                         loggedIndicator.style.display = 'none';
                         authBtn.textContent = 'Login / Register';
