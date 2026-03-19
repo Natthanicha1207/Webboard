@@ -155,6 +155,9 @@
         // persist chosen profile picture (already stored in localStorage by change handler)
         // All validations passed — allow the form to submit to register-success.html
       });
+      // Save custom username
+      const usernameInput = document.getElementById('username').value;
+      localStorage.setItem('customUsername', username);
     </script>
   </body>
 </html>
