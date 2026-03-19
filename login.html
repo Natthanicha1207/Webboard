@@ -22,14 +22,38 @@
                     if (hasUsername) {
                         window.location.href = 'index.html';
                     } else {
-                        window.location.href = 'register-step2.html?method=facebook&name=' + userInfo.name';
+                        window.location.href = 'register-step2.html?method=facebook&name=' + userInfo.name; 
                     }
-               });
+               })
             } else {
                alert('Login cancelled.');
             }
         }, {scope: 'public_profile'});
     }
+    </script>
+    <script>
+    function loginWithGoogle(){
+        google.accounts.id.initialize({
+            client_id: '492222516321-5mlcb3bjf5kd75iqt6cep3g4e9fpdbsq.apps.googleusercontent.com',
+            callback: handleGoogleResponse
+        });
+
+        google.accounts.id.prompt();
+    }
+
+    function handleGoogleResponse(response){
+        // Decode the JWT token to get user info
+        const payload = JSON.parse(atob(response.credential.split('.')[1]));
+        const userName = payLoad.name;
+        const userAvatar = payload.picture;
+
+        // Save to localStorage (same pattern as Facebook login)
+        localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('userName', userName);
+        localStorage.setItem('userAvatar', userAvatar);
+        localStorage.setItem('loginMethod', 'google');     
+        };
+
     </script>
     <body>
         <header>
