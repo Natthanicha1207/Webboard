@@ -48,7 +48,6 @@
             { theme: 'outline', size: 'large' }
         );
     }
-    google.accounts.id.prompt();
 
     function handleGoogleResponse(response){
         console.log('Google response received!', response);
@@ -62,9 +61,9 @@
         localStorage.setItem('userName', userName);
         localStorage.setItem('userAvatar', userAvatar);
         localStorage.setItem('loginMethod', 'google');     
-        };
-
-        window.location.href = 'index.html';
+        
+        window
+    };
 
     </script>
     <body>
