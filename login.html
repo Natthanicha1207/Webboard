@@ -63,6 +63,8 @@
         localStorage.setItem('loginMethod', 'google');     
         };
 
+        window.location.href = 'index.html';
+
     </script>
     <body>
         <header>
@@ -88,7 +90,7 @@
                     });
                 }
                 </script>
-                <button class="social-btn google" onclick="showLoginPopup('Google')">Login with Google</button>
+                <button class="social-btn google" onclick="LoginPopup('Google')">Login with Google</button>
                 <div id="google-btn"></div>
                 <button class="social-btn X" onclick="showLoginPopup('X')">Login with X</button>
 
