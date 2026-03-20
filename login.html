@@ -50,9 +50,10 @@
     }
 
     function handleGoogleResponse(response){
+        console.log('Google response received!', response);
         // Decode the JWT token to get user info
         const payload = JSON.parse(atob(response.credential.split('.')[1]));
-        const userName = payLoad.name;
+        const userName = payload.name;
         const userAvatar = payload.picture;
 
         // Save to localStorage (same pattern as Facebook login)
