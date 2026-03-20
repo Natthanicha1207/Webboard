@@ -42,6 +42,7 @@
             callback: handleGoogleResponse,
             auto_select: false
         });
+        google.accounts.id.prompt();
 
         google.accounts.id.renderButton(
             document.getElementById('google-login-btn'),
@@ -90,7 +91,7 @@
                     });
                 }
                 </script>
-                <div id="google-login-btn"></div>
+                <button class="social-btn google" onclick=""loginWithGoogle()">Login with Google</button>
                 <button class="social-btn X" onclick="showLoginPopup('X')">Login with X</button>
 
                 <div class="divider">- or -</div>
@@ -150,8 +151,5 @@
             }
         </script>
 
-        <script>
-            window.addEventListener('load', loginWithGoogle);
-        </script>
     </body>
 </html>
