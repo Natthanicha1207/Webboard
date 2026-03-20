@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="style.css">
         <meta charset="UTF-8">
         <title>Login</title>
-        <script src="https://accounts.google.com/gsi/client" onload="loginWithGoogle()" async defer></script>
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
     </head>
     <script>
     function loginWithFacebook(){
@@ -148,6 +148,10 @@
                 alert('Welcome back! You have successfully logged in.');
                 location.href = 'index.html';
             }
+        </script>
+
+        <script>
+            window.addEventListener('load', loginWithGoogle);
         </script>
     </body>
 </html>
