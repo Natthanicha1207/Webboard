@@ -35,20 +35,32 @@
     }
     </script>
     <script>
+        if(window.location.hash.includes('access_token')){
+            const token = new URLSearchParams(window.location.hash.slice(1)).get('access_token');
+            fetch('https://www.googleapis.com/oauth2/v3/userinfo?access_token=' + token)
+                .then(response => response.json())
+                .then(user => {
+                    localStorage.setItem('loggedIn', 'true');
+                    localStorage.setItem('userName', user.name);
+                    localStorage.setItem('userAvatar', user.picture);
+                    localStorage.setItem('loginMethod', 'google');
+                    window.location.href = 'index.html';
+                });      
+        }
     function loginWithGoogle(){
-        google.accounts.id.disableAutoSelect();
-        google.accounts.id.initialize({
-            client_id: '492222516321-5mlcb3bjf5kd75iqt6cep3g4e9fpdbsq.apps.googleusercontent.com',
-            callback: handleGoogleResponse,
-            auto_select: false
-        });
+        const clientId = '492222516321-5mlcb3bjf5kd75iqt6cep3g4e9fpdbsq.apps.googleusercontent.com';
+        const redirectUri = encodeURIComponent('https://natthanicha1207.github.io/Webboard/index.html');
+        const scope = encodeURIComponent('profile email');
+
+        window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+    
+        }
         google.accounts.id.prompt();
 
         google.accounts.id.renderButton(
             document.getElementById('google-login-btn'),
             { theme: 'outline', size: 'large' }
         );
-    }
 
     function handleGoogleResponse(response){
         console.log('Google response received!', response);
