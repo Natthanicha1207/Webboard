@@ -57,11 +57,6 @@
         }
         google.accounts.id.prompt();
 
-        google.accounts.id.renderButton(
-            document.getElementById('google-login-btn'),
-            { theme: 'outline', size: 'large' }
-        );
-
     function handleGoogleResponse(response){
         console.log('Google response received!', response);
         // Decode the JWT token to get user info
