@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="style.css">
         <meta charset="UTF-8">
         <title>Login</title>
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script src="https://accounts.google.com/gsi/client" onload="loginWithGoogle()" async defer></script>
     </head>
     <script>
     function loginWithFacebook(){
@@ -48,7 +48,6 @@
             { theme: 'outline', size: 'large' }
         );
     }
-    window.onload = loginWithGoogle;
     google.accounts.id.prompt();
 
     function handleGoogleResponse(response){
