@@ -35,7 +35,6 @@
     }
     </script>
     <script>
-        window.onload = loginWithGoogle;
     function loginWithGoogle(){
         google.accounts.id.disableAutoSelect();
         google.accounts.id.initialize({
@@ -89,6 +88,7 @@
                 }
                 </script>
                 <button class="social-btn google" onclick="showLoginPopup('Google')">Login with Google</button>
+                <div id="google-btn"></div>
                 <button class="social-btn X" onclick="showLoginPopup('X')">Login with X</button>
 
                 <div class="divider">- or -</div>
