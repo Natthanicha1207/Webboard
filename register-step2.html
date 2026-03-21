@@ -165,10 +165,10 @@
         const p2 = document.getElementById('password2').value;
         if(p !== p2){ e.preventDefault(); showError('Passwords do not match.'); return; }
 
-        const bd = document.getElementById('birthday').value;
-        if(!bd){ e.preventDefault(); showError('Birthday is required.'); return; }
-        const d = new Date(bd);
-        if(Number.isNaN(d.getTime())){ e.preventDefault(); showError('Invalid birthday date.'); return; }
+        const day = document.getElementById('birthday').value;
+        const month = document.getElementById('birthMonth').value;
+        const year = document.getElementById('birthYear').value;
+        if(!day || !month || !year){ e.preventDefault(); showError('Please select your complete date of birth.'); return; }
 
         const acct = document.getElementById('accountName').value.trim();
         if(!acct){ e.preventDefault(); showError('Account Name is required and cannot be empty.'); return; }
@@ -188,7 +188,8 @@ for(let d = 1; d <= 31; d++){
 
 // Populate year dropdown
 const yearSelect = document.getElementById('birthYear');
-for(let y = 2010; y >= 1990; y--){
+const currentYear = new Date().getFullYear();
+for(let y = currentYear; y >= 1900; y--){
     const opt = document.createElement('option');
     opt.value = y;
     opt.textContent = y;

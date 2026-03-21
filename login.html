@@ -50,7 +50,13 @@ if(window.location.hash.includes('access_token')){
             localStorage.setItem('userName', user.name);
             localStorage.setItem('userAvatar', user.picture);
             localStorage.setItem('loginMethod', 'google');
-            window.location.href = 'index.html';
+
+const hasUsername = localStorage.getItem('customUsername');
+if(hasUsername){
+    window.location.href = 'index.html';
+} else {
+    window.location.href = 'register-step2.html?method=google&name=' + user.name;
+}
          });
 }
 </script>
