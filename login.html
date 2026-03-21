@@ -16,8 +16,7 @@
                     localStorage.setItem('user', JSON.stringify(userInfo));
                     localStorage.setItem('userName', userInfo.name);
                     localStorage.setItem('loggedIn', '1');
-                    window.location.href = 'index.html';
-
+                    
                     //Check if user has set username before
                     const hasUsername =
                 localStorage.getItem('customUsername');
@@ -47,7 +46,7 @@ if(window.location.hash.includes('access_token')){
     fetch('https://www.googleapis.com/oauth2/v3/userinfo?access_token=' + token)
         .then(r => r.json())
         .then(user => {
-            localStorage.setItem('loggedIn', 'true');
+            localStorage.setItem('loggedIn', '1');
             localStorage.setItem('userName', user.name);
             localStorage.setItem('userAvatar', user.picture);
             localStorage.setItem('loginMethod', 'google');
